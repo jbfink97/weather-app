@@ -5,6 +5,7 @@ html {
 
 body {
     display: flex;
+    height: 100vh;
 }
 
 #main {
@@ -15,4 +16,24 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+#submitBtn {
+    display: none;
+}
+
+#weatherDiv {
+    flex-grow: 100;
+}
+
+input {
+    border-radius: 10px;
+    min-width: 13vw;
+    padding: .5vh;
+}
+
+#searchBarDiv {
+    padding: 2vh 2vw;
+    display: flex;
+    justify-content: flex-end;
 }
