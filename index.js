@@ -2,6 +2,7 @@ async function geocode(location) {
     try {
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
         const geoData = await response.json();
+        errorDiv.textContent = '';
 
         let locationObj = geoData.results[0];
 
@@ -22,8 +23,8 @@ async function geocode(location) {
         const long = locationObj.longitude;
         getWeather(lat, long, name);
         
-    } catch(error) {
-        console.log(error);
+    } catch {
+        errorDiv.textContent = 'Cannot find city, please enter a valid city or postal code';
     }
 }
 
@@ -69,4 +70,40 @@ submitBtn.addEventListener('click', (event) => {
     event.preventDefault(); 
     geocode(input.value);
 })
+
+const errorDiv = document.createElement('div');
+errorDiv.id = 'errorMessage';
+searchBarDiv.append(errorDiv);
+
+const weatherCodeDiv = document.createElement('div');
+weatherCodeDiv.id = 'weatherCodeDiv';
+weatherCodeDiv.textContent = 'Sunny';
+
+const locationDiv = document.createElement('div');
+locationDiv.id = 'locationDiv';
+locationDiv.textContent = 'Raleigh, NC';
+
+const tempDiv = document.createElement('div');
+tempDiv.id = 'tempDiv';
+
+const degreeDiv = document.createElement('div');
+degreeDiv.id = 'degreeDiv';
+degreeDiv.textContent = '75';
+
+const detailsDiv = document.createElement('div');
+detailsDiv.id = 'detailsDiv';
+
+const feelsLikeDiv = document.createElement('div');
+feelsLikeDiv.textContent = `Feels like 72`;
+
+const windDiv = document.createElement('div');
+windDiv.textContent = `Wind: 8MPH`;
+
+const humidityDiv = document.createElement('div');
+humidityDiv.textContent = `Humidity: 42%`;
+
+detailsDiv.append(feelsLikeDiv, windDiv, humidityDiv);
+tempDiv.append(degreeDiv, detailsDiv);
+
+weatherDiv.append(weatherCodeDiv, locationDiv, tempDiv);
 
