@@ -1,10 +1,10 @@
+import { updatePage, geocode } from './functions';
 import './style.css';
 
 const fahrenheitData = {};
 const celsiusData = {};
+let unit = 'F';
 
-
-console.log('load page fn');
 const content = document.getElementById('main');
 
 const form = document.createElement('form');
@@ -51,7 +51,7 @@ const degreeDiv = document.createElement('div');
 degreeDiv.id = 'degreeDiv';
 degreeDiv.textContent = `77`;
 const degreeSpan = document.createElement('span');
-degreeSpan.innerHTML = '&#8457';
+degreeSpan.innerHTML = '&#8457;'
 
 const detailsDiv = document.createElement('div');
 detailsDiv.id = 'detailsDiv';
@@ -74,7 +74,23 @@ degreeDiv.append(degreeSpan);
 detailsDiv.append(feelsLikeDiv, windDiv, humidityDiv);
 tempDiv.append(degreeDiv, detailsDiv);
 
-weatherDiv.append(weatherCodeDiv, locationDiv, tempDiv);
+const unitBtn = document.createElement('button');
+unitBtn.type = 'button';
+unitBtn.id = 'unitBtn';
+unitBtn.innerHTML = '&#8457;'
+unitBtn.addEventListener('click', () => {
+    if (unit == 'F') {
+        unit = 'C';
+        unitBtn.innerHTML = '&#8451;';
+        updatePage();
+    } else {
+        unit = 'F';
+        unitBtn.innerHTML = '&#8457;';
+        updatePage();
+    }
+})
+
+weatherDiv.append(weatherCodeDiv, locationDiv, tempDiv, unitBtn);
 
 export { errorDiv, weatherCodeDiv, locationDiv, tempDiv, detailsDiv, fahrenheitData, celsiusData };
 

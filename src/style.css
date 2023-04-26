@@ -89,3 +89,8 @@ input {
     align-items: flex-end;
     flex-direction: column;
 }
+
+#unitBtn {
+    max-width: 10vw;
+    cursor: pointer;
+}

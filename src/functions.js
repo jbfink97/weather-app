@@ -1,5 +1,6 @@
 import { errorDiv } from "./index";
-
+import weatherCodes from "./weatherCodes";
+import { fahrenheitData, celsiusData } from "./index";
 async function geocode(location) {
     try {
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
@@ -46,4 +47,8 @@ function parseData(fahrenheit, celsius) {
     
 }
 
-export {geocode, getWeather, parseData}
+function updatePage() {
+
+}
+
+export { geocode, updatePage}
