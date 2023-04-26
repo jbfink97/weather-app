@@ -1,3 +1,5 @@
+import { errorDiv } from "./index";
+
 async function geocode(location) {
     try {
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
@@ -22,7 +24,7 @@ async function geocode(location) {
         const lat = locationObj.latitude;
         const long = locationObj.longitude;
         getWeather(lat, long, name);
-        
+
     } catch {
         errorDiv.textContent = 'Cannot find city, please enter a valid city or postal code';
     }
@@ -40,70 +42,8 @@ async function getWeather(latitude, longitude, name) {
 
 }
 
+function parseData(fahrenheit, celsius) {
+    
+}
 
-
-
-
-const content = document.getElementById('main');
-
-const form = document.createElement('form');
-const searchBarDiv = document.createElement('div');
-searchBarDiv.id = 'searchBarDiv';
-const input = document.createElement('input');
-input.type = 'text';
-input.id = 'Location';
-input.placeholder = 'Search city or postal code';
-
-const submitBtn = document.createElement('button');
-submitBtn.id = 'submitBtn';
-
-form.append(input, submitBtn)
-searchBarDiv.append(form);
-content.append(searchBarDiv);
-
-const weatherDiv = document.createElement('div');
-content.append(weatherDiv);
-weatherDiv.id = 'weatherDiv';
-
-
-submitBtn.addEventListener('click', (event) => {
-    event.preventDefault(); 
-    geocode(input.value);
-})
-
-const errorDiv = document.createElement('div');
-errorDiv.id = 'errorMessage';
-searchBarDiv.append(errorDiv);
-
-const weatherCodeDiv = document.createElement('div');
-weatherCodeDiv.id = 'weatherCodeDiv';
-weatherCodeDiv.textContent = 'Sunny';
-
-const locationDiv = document.createElement('div');
-locationDiv.id = 'locationDiv';
-locationDiv.textContent = 'Raleigh, NC';
-
-const tempDiv = document.createElement('div');
-tempDiv.id = 'tempDiv';
-
-const degreeDiv = document.createElement('div');
-degreeDiv.id = 'degreeDiv';
-degreeDiv.textContent = '75';
-
-const detailsDiv = document.createElement('div');
-detailsDiv.id = 'detailsDiv';
-
-const feelsLikeDiv = document.createElement('div');
-feelsLikeDiv.textContent = `Feels like 72`;
-
-const windDiv = document.createElement('div');
-windDiv.textContent = `Wind: 8MPH`;
-
-const humidityDiv = document.createElement('div');
-humidityDiv.textContent = `Humidity: 42%`;
-
-detailsDiv.append(feelsLikeDiv, windDiv, humidityDiv);
-tempDiv.append(degreeDiv, detailsDiv);
-
-weatherDiv.append(weatherCodeDiv, locationDiv, tempDiv);
-
+export {geocode, getWeather, parseData}

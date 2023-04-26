@@ -50,19 +50,32 @@ body {
     column-gap: 2vw;
 }
 
+#feelsLikeDiv {
+    display: flex;
+}
+
+#feelsLikeDiv > span {
+    font-size: small;
+}
+
 #degreeDiv {
     padding-top: 1vh;
     font-size: 5rem;
+    display: flex;
 }
 
 #detailsDiv {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    /* padding-top: 2.5vh; */
     padding-left: 1vw;
     border-left: 1px solid whitesmoke;
 }
+
+span {
+    font-size: 1.5rem;
+}
+
 
 input {
     border-radius: 10px;
