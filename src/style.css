@@ -93,4 +93,5 @@ input {
 #unitBtn {
     max-width: 10vw;
     cursor: pointer;
+    border-radius: 10px;
 }
