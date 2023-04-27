@@ -50,11 +50,11 @@ body {
     column-gap: 2vw;
 }
 
-#feelsLikeDiv {
+.maxmin {
     display: flex;
 }
 
-#feelsLikeDiv > span {
+.maxmin > span {
     font-size: small;
 }
 
@@ -70,6 +70,7 @@ body {
     justify-content: space-evenly;
     padding-left: 1vw;
     border-left: 1px solid whitesmoke;
+    row-gap: 2vh;
 }
 
 span {
@@ -91,6 +92,7 @@ input {
 }
 
 #unitBtn {
+    margin-top: 2vh;
     max-width: 10vw;
     cursor: pointer;
     border-radius: 10px;

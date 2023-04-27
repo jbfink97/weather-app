@@ -1,8 +1,7 @@
-import { updatePage, geocode } from './functions';
+import { geocode, updatePage, fahrenheitData, celsiusData } from './functions';
 import './style.css';
 
-const fahrenheitData = {};
-const celsiusData = {};
+
 let unit = 'F';
 
 const content = document.getElementById('main');
@@ -38,41 +37,44 @@ searchBarDiv.append(errorDiv);
 
 const weatherCodeDiv = document.createElement('div');
 weatherCodeDiv.id = 'weatherCodeDiv';
-weatherCodeDiv.textContent = 'Sunny';
 
 const locationDiv = document.createElement('div');
 locationDiv.id = 'locationDiv';
-locationDiv.textContent = 'Raleigh, NC';
+
 
 const tempDiv = document.createElement('div');
 tempDiv.id = 'tempDiv';
 
 const degreeDiv = document.createElement('div');
 degreeDiv.id = 'degreeDiv';
-degreeDiv.textContent = `77`;
+
 const degreeSpan = document.createElement('span');
 degreeSpan.innerHTML = '&#8457;'
 
 const detailsDiv = document.createElement('div');
 detailsDiv.id = 'detailsDiv';
 
-const feelsLikeDiv = document.createElement('div');
-feelsLikeDiv.textContent = `Feels like 72`;
-feelsLikeDiv.id = 'feelsLikeDiv';
-const feelsLikeSpan = document.createElement('span');
-feelsLikeSpan.innerHTML = '&#8457';
+const maxTempDiv = document.createElement('div');
+maxTempDiv.classList = 'maxmin';
+
+const maxTempSpan = document.createElement('span');
+maxTempSpan.innerHTML = '&#8457';
+
+const minTempDiv = document.createElement('div');
+minTempDiv.classList = 'maxmin';
+
+const minTempSpan = document.createElement('span');
+minTempSpan.innerHTML = '&#8457';
 
 
 const windDiv = document.createElement('div');
-windDiv.textContent = `Wind: 8MPH`;
 
-const humidityDiv = document.createElement('div');
-humidityDiv.textContent = `Humidity: 42%`;
-
-feelsLikeDiv.append(feelsLikeSpan);
+maxTempDiv.append(maxTempSpan);
+minTempDiv.append(minTempSpan);
 degreeDiv.append(degreeSpan);
-detailsDiv.append(feelsLikeDiv, windDiv, humidityDiv);
+detailsDiv.append(maxTempDiv, minTempDiv, windDiv);
 tempDiv.append(degreeDiv, detailsDiv);
+geocode('Raleigh');
 
 const unitBtn = document.createElement('button');
 unitBtn.type = 'button';
@@ -82,16 +84,16 @@ unitBtn.addEventListener('click', () => {
     if (unit == 'F') {
         unit = 'C';
         unitBtn.innerHTML = '&#8451;';
-        updatePage();
+        updatePage(fahrenheitData, celsiusData, locationDiv.textContent);
     } else {
         unit = 'F';
         unitBtn.innerHTML = '&#8457;';
-        updatePage();
+        updatePage(fahrenheitData, celsiusData, locationDiv.textContent);
     }
 })
 
 weatherDiv.append(weatherCodeDiv, locationDiv, tempDiv, unitBtn);
 
-export { errorDiv, weatherCodeDiv, locationDiv, tempDiv, detailsDiv, fahrenheitData, celsiusData };
+export { unit, errorDiv, weatherCodeDiv, locationDiv, degreeDiv, maxTempDiv, minTempDiv, windDiv };
 
 

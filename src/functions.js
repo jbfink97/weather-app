@@ -1,6 +1,10 @@
-import { errorDiv } from "./index";
+import { unit, errorDiv, weatherCodeDiv, locationDiv, degreeDiv, maxTempDiv, minTempDiv, windDiv } from "./index";
 import weatherCodes from "./weatherCodes";
-import { fahrenheitData, celsiusData } from "./index";
+import Weather from "./class";
+
+let fahrenheitData;
+let celsiusData;
+
 async function geocode(location) {
     try {
         const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${location}`);
@@ -21,34 +25,74 @@ async function geocode(location) {
             }
         }
 
-        const name = locationObj.name;
+        const city = locationObj.name;
+        const state = locationObj.admin1;
+        const country = locationObj.country;
+        let displayedLocation = '';
+
+        if (country == 'United States') {
+            displayedLocation = `${city}, ${state}`;
+        } else {
+            displayedLocation = `${city}, ${country}`;
+        }
+
         const lat = locationObj.latitude;
         const long = locationObj.longitude;
-        getWeather(lat, long, name);
+        getWeather(lat, long, displayedLocation);
 
     } catch {
         errorDiv.textContent = 'Cannot find city, please enter a valid city or postal code';
     }
 }
 
-async function getWeather(latitude, longitude, name) {
+async function getWeather(latitude, longitude, displayedLocation) {
     const responseFahrenheit = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max&current_weather=true&temperature_unit=fahrenheit&windspeed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York`);
     const dataFahrenheit = await responseFahrenheit.json();
     const responseCelsius = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=weathercode,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,sunrise,sunset,uv_index_max&current_weather=true&timezone=America%2FNew_York`);
     const dataCelsius = await responseCelsius.json();
 
-    console.log(dataFahrenheit);
-    console.log(dataCelsius);
+    parseData(dataFahrenheit, dataCelsius, displayedLocation);
+
+}
+
+function parseData(fahrenheit, celsius, displayedLocation) {
+
+    const weatherCodeKey = fahrenheit['current_weather'].weathercode;
+    const weatherConditions = weatherCodes[weatherCodeKey];
+    const fahrenheitCurrentTemp = Math.round(fahrenheit['current_weather'].temperature);
+    const fahrenheitMax = Math.round(fahrenheit['daily']['temperature_2m_max'][0]);
+    const fahrenheitMin = Math.round(fahrenheit['daily']['temperature_2m_min'][0]);
+    const fahrenheitWind = Math.round(fahrenheit['current_weather'].windspeed);
+
+    const celsiusCurrentTemp = Math.round(celsius['current_weather'].temperature);
+    const celsiusMax = Math.round(celsius['daily']['temperature_2m_max'][0]);
+    const celsiusMin = Math.round(celsius['daily']['temperature_2m_min'][0]);
+    const celsiusWind = Math.round(celsius['current_weather'].windspeed);
+
+    fahrenheitData = new Weather('F', weatherConditions, fahrenheitCurrentTemp, fahrenheitMax, fahrenheitMin, fahrenheitWind);
+    celsiusData = new Weather('C', weatherConditions, celsiusCurrentTemp, celsiusMax, celsiusMin, celsiusWind);
+    updatePage(fahrenheitData, celsiusData, displayedLocation);
 
 
 }
 
-function parseData(fahrenheit, celsius) {
-    
+function updatePage(fahrenheitClass, celsiusClass, displayedLocation) {
+    weatherCodeDiv.textContent = `${fahrenheitClass.weatherConditions}`;
+    locationDiv.textContent = displayedLocation;
+    // weatherCodeDiv, locationDiv, degreeDiv, maxTempDiv, minTempDiv, windDiv
+    if (unit == 'F') {
+        degreeDiv.innerHTML = `${fahrenheitClass.currentTemp}`;
+        maxTempDiv.textContent = `Max: ${fahrenheitClass.max}`;
+        minTempDiv.textContent = `Min : ${fahrenheitClass.min}`;
+        windDiv.textContent = `Wind: ${fahrenheitClass.wind} MPH`;
+    } else {
+        degreeDiv.textContent = `${celsiusClass.currentTemp}`;
+        maxTempDiv.textContent = `Max: ${celsiusClass.max}`;
+        minTempDiv.textContent = `Min : ${celsiusClass.min}`;
+        windDiv.textContent = `Wind: ${celsiusClass.wind} Km/h`;
+    }
 }
 
-function updatePage() {
 
-}
 
-export { geocode, updatePage}
+export { geocode, updatePage, fahrenheitData, celsiusData }
