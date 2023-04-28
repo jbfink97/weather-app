@@ -81,14 +81,14 @@ function updatePage(fahrenheitClass, celsiusClass, displayedLocation) {
     locationDiv.textContent = displayedLocation;
     // weatherCodeDiv, locationDiv, degreeDiv, maxTempDiv, minTempDiv, windDiv
     if (unit == 'F') {
-        degreeDiv.innerHTML = `${fahrenheitClass.currentTemp}`;
-        maxTempDiv.textContent = `Max: ${fahrenheitClass.max}`;
-        minTempDiv.textContent = `Min : ${fahrenheitClass.min}`;
+        degreeDiv.innerHTML = `${fahrenheitClass.currentTemp} &#8457;`;
+        maxTempDiv.innerHTML = `Max: ${fahrenheitClass.max} &#8457;`;
+        minTempDiv.innerHTML = `Min : ${fahrenheitClass.min} &#8457;`;
         windDiv.textContent = `Wind: ${fahrenheitClass.wind} MPH`;
     } else {
-        degreeDiv.textContent = `${celsiusClass.currentTemp}`;
-        maxTempDiv.textContent = `Max: ${celsiusClass.max}`;
-        minTempDiv.textContent = `Min : ${celsiusClass.min}`;
+        degreeDiv.innerHTML = `${celsiusClass.currentTemp} &#8451;`;
+        maxTempDiv.innerHTML = `Max: ${celsiusClass.max} &#8451;`;
+        minTempDiv.innerHTML = `Min : ${celsiusClass.min} &#8451;`;
         windDiv.textContent = `Wind: ${celsiusClass.wind} Km/h`;
     }
 }
