@@ -16,6 +16,7 @@ input.placeholder = 'Search city or postal code';
 
 const submitBtn = document.createElement('button');
 submitBtn.id = 'submitBtn';
+submitBtn.textContent = 'search';
 
 form.append(input, submitBtn)
 searchBarDiv.append(form);

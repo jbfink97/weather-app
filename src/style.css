@@ -21,7 +21,10 @@ body {
 }
 
 #submitBtn {
-    display: none;
+    /* display: none; */
+    border-radius: 25px;
+    margin-left: 0.5vw;
+
 }
 
 #errorMessage {
